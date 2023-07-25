@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FPL</string>
+
+    <string name="auth_view_signInBtn">Đăng nhập bằng Google</string>
+    <string name="auth_view_selector">Chọn cơ sở</string>
+    <string name="fragment_settings_logout_btn">Đăng xuất</string>
+    <string name="app_copyright">made by acayrin \n with a cup of coffee</string>
+    <string name="classes_fragment_tab_upcoming">Lịch học</string>
+    <string name="classes_fragment_tab_exams">Lịch thi</string>
+</resources>

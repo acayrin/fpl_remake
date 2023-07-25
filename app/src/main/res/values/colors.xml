@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom colors -->
+    <color name="primary">#eb9234</color>
+    <color name="primary_dimmed">#E68A28</color>
+    <color name="primary_ed">#E68A28</color>
+    <color name="primary_ed_dimmed">#D67916</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_dimmed">#DDDDDD</color>
+
+    <color name="background">#2b2b2b</color>
+    <color name="background_light">#3A3A3A</color>
+    <color name="background_transparent">#aa2b2b2b</color>
+
+    <color name="background_dimmed">#1E1E1E</color>
+    <color name="background_dimmed_light">#2b2b2b</color>
+    <color name="background_dimmed_transparent">#aa1E1E1E</color>
+</resources>
