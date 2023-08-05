@@ -99,7 +99,7 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 ico!!.setTint(ResourcesCompat.getColor(resources, fg, null))
                 it.setCompoundDrawablesWithIntrinsicBounds(ico, null, null, null)
 
-                return@setOnTouchListener true
+                return@setOnTouchListener v.performClick()
             }
         }
     }
@@ -113,7 +113,7 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 signInUser(task.getResult(ApiException::class.java))
             } catch (e: ApiException) {
                 Toast.makeText(this, "Failed to sign in", Toast.LENGTH_SHORT).show()
-                Log.e("AUTH", e.localizedMessage)
+                throw(e)
             }
         }
     }

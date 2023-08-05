@@ -2,6 +2,7 @@ package io.acay.fpl.fragments.news.sub
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
@@ -46,7 +47,7 @@ class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
                 val jsonArr = JSONObject(it.body!!.string()).getJSONArray("data")
 
                 with(arrayListOf<Article>()) {
-                    for (i in 0..jsonArr.length()) {
+                    for (i in 0 until jsonArr.length()) {
                         val article = jsonArr.get(i) as JSONObject
 
                         add(
@@ -60,7 +61,9 @@ class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
                         )
                     }
 
-                    recyclerAdapter.update(this)
+                    Handler(Looper.getMainLooper()).post {
+                        recyclerAdapter.update(this)
+                    }
                 }
             }
         }.start()
