@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="12dp"
+    android:padding="12dp"
+    android:background="@drawable/article_background">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/notification_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="{title}"
+        android:textSize="20sp"
+        android:textColor="@color/primary" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/notification_item_timestamp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="{timestamp}"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:textColor="@color/background_light" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginTop="12dp"
+        android:id="@+id/notification_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="{description}"
+        android:textSize="16sp"
+        android:textColor="@color/background" />
+</androidx.appcompat.widget.LinearLayoutCompat>

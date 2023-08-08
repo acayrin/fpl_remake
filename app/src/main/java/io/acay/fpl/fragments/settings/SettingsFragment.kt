@@ -35,8 +35,10 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        for (i in 1..12) {
-            dates.add(i)
+        if (dates.size == 0) {
+            for (i in 1..12) {
+                dates.add(i)
+            }
         }
 
         if (context != null) {
