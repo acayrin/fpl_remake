@@ -20,7 +20,7 @@ class ArticleDrawerFragment(private val article: Article) :
 
         articleTitle.text = article.title
         articleAuthor.text = article.author
-        articleTimestamp.text = SimpleDateFormat().format(article.timestamp)
+        articleTimestamp.text = article.timestamp
         articleContent.text = article.content
     }
 }

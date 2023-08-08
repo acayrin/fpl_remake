@@ -33,12 +33,12 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
             it.setupWithViewPager(viewPager)
 
             for (p in tabs) {
-                val view = AppCompatTextView(requireContext())
-                view.text = p.second
-                view.textSize = 16F
-                view.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                view.setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
-                it.getTabAt(tabs.indexOf(p))!!.customView = view
+                val v = AppCompatTextView(requireContext())
+                v.text = p.second
+                v.textSize = 16F
+                v.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                v.setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
+                it.getTabAt(tabs.indexOf(p))!!.customView = v
             }
         }
     }

@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import io.acay.fpl.R
 import io.acay.fpl.fragments.classes.ClassesFragment
+import io.acay.fpl.fragments.home.HomeFragment
 import io.acay.fpl.fragments.news.NewsFragment
 import io.acay.fpl.fragments.settings.SettingsFragment
 import io.acay.fpl.hooks.StartServices
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
     private val tabs = arrayOf(
+        Pair(HomeFragment(), R.drawable.vec_home),
         Pair(NewsFragment(), R.drawable.vec_newspaper),
         Pair(ClassesFragment(), R.drawable.vec_google_classroom),
         Pair(SettingsFragment(), R.drawable.vec_cogwheel)

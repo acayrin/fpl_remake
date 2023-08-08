@@ -12,9 +12,15 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import io.acay.fpl.R
+import io.acay.fpl.model.sqlite.Notification
+import io.acay.fpl.service.sqlite.NotificationStore
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class UpcomingClassesService : Service() {
+class UpcomingClassNotificationService : Service() {
     private val id = 1337
+    private val delay = 300 * 1_000L
     private val notificationChannel = NotificationChannel(
         id.toString(), id.toString(), NotificationManager.IMPORTANCE_LOW
     )
@@ -25,18 +31,33 @@ class UpcomingClassesService : Service() {
 
         Thread {
             while (true) {
+                val value = Notification(
+                    0,
+                    "Test notification",
+                    "Test notification description",
+                    SimpleDateFormat("mm-dd-yyyy HH:mm:ss", Locale.US).format(
+                        Date()
+                    ).toString(),
+                    false
+                )
+
+                // store it in store
+                NotificationStore(applicationContext).insertNotification(value)
+
+                // check
                 if (application.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     Log.w("FPL_Notification", "Permission denied for POST_NOTIFICATIONS")
-                    Thread.sleep(10_000)
+                    Thread.sleep(delay)
                     continue
                 }
 
+                // create base notification object
                 val notification = NotificationCompat.Builder(applicationContext, id.toString())
-                    .setSmallIcon(R.drawable.ico_app_main).setContentTitle("Test notification")
-                    .setContentText("Test notification body")
+                    .setSmallIcon(R.drawable.ico_app_main).setContentTitle(value.title)
+                    .setContentText(value.description)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT).setStyle(
                         // the text to be showed when expanding the notification bubble
-                        NotificationCompat.BigTextStyle().bigText("Test notification big text")
+                        NotificationCompat.BigTextStyle().bigText(value.description)
                     ).setContentIntent(
                         // backward compatibility
                         PendingIntent.getActivity(
@@ -45,12 +66,13 @@ class UpcomingClassesService : Service() {
                     ).build()
                 notification.flags = NotificationCompat.FLAG_AUTO_CANCEL
 
+                // send to the user
                 val notificationManager =
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.createNotificationChannel(notificationChannel)
                 notificationManager.notify(id, notification)
 
-                Thread.sleep(10_000)
+                Thread.sleep(delay)
             }
         }.start()
 

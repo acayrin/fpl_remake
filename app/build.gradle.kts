@@ -35,6 +35,9 @@ android {
 dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.github.lukelorusso:VerticalSeekBar:1.2.7")
+    implementation("com.github.vipulasri:timelineview:1.1.5")
+    implementation("com.github.arover:moment:1.8")
     implementation("com.google.android.gms:play-services-auth:20.6.0")
 
     implementation("androidx.core:core-ktx:1.10.1")

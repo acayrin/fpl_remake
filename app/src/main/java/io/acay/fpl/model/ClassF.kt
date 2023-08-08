@@ -9,7 +9,7 @@ class ClassF(
     val subjectName: String,
     val classId: String,
     val teacher: String,
-    val period: Int,
+    val shift: Int,
     val durationFrom: String,
     val durationTo: String,
     val onlineLink: String?,

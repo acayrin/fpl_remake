@@ -8,15 +8,15 @@
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ico_app_main"
         android:label="@string/app_name"
         android:roundIcon="@drawable/ico_app_main"
+        android:screenOrientation="sensorPortrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.FPL"
-        tools:targetApi="31">
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.AuthActivity"
             android:exported="true">
@@ -29,6 +29,6 @@
             android:name=".activity.MainActivity"
             android:exported="true" />
 
-        <service android:name=".service.UpcomingClassesService" />
+        <service android:name=".service.UpcomingClassNotificationService" />
     </application>
 </manifest>

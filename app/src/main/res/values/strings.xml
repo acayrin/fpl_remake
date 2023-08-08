@@ -7,4 +7,5 @@
     <string name="app_copyright">made by acayrin \n with a cup of coffee</string>
     <string name="classes_fragment_tab_upcoming">Lịch học</string>
     <string name="classes_fragment_tab_exams">Lịch thi</string>
+    <string name="read_more">Read more</string>
 </resources>
