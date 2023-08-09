@@ -48,7 +48,7 @@ class NotificationStore(context: Context) :
         readableDatabase.apply {
             val cur = rawQuery("select * from notifications order by timestamp desc", null)
             if (cur.moveToFirst()) {
-                while (cur.moveToNext()) {
+                do {
                     out.add(
                         Notification(
                             id = cur.getInt(0),
@@ -58,7 +58,7 @@ class NotificationStore(context: Context) :
                             seen = cur.getInt(4) == 1
                         )
                     )
-                }
+                } while (cur.moveToNext())
             }
             cur.close()
         }

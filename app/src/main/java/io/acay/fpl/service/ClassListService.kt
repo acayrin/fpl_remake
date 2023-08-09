@@ -1,50 +1,54 @@
 package io.acay.fpl.service
 
+import android.os.Handler
+import android.os.Looper
 import io.acay.fpl.model.ClassF
-import java.text.SimpleDateFormat
-import java.util.Locale
-import java.util.Random
+import okhttp3.OkHttpClient
+import org.json.JSONObject
 
 class ClassListService {
     companion object {
-        // dummy data
-        // TODO implement API
-        fun getClasses(): ArrayList<ClassF> {
-            val classList = arrayListOf<ClassF>()
+        fun getClasses(q: String?, res: (ArrayList<ClassF>) -> Unit) {
+            Thread {
+                try {
+                    val req = okhttp3.Request.Builder()
+                        .url("http://acay.atwebpages.com/asm/api/getClasses.php${if (q != null) "?q=$q" else ""}")
+                        .get().build()
 
-            for (i in 0..20) {
-                classList.add(
-                    ClassF(
-                        i,
-                        SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(
-                            System.currentTimeMillis() + Random().nextInt(24 * 3_600 * 14 * 1_000) - Random().nextInt(
-                                24 * 3_600 * 14 * 1_000
-                            )
-                        ),
-                        "Room ${i}",
-                        "Location ${i}",
-                        "Subject ID ${i}",
-                        "Subject ${i}",
-                        "Class ${i}",
-                        "Teacher #${i}",
-                        Random().nextInt(5),
-                        "xx:xx",
-                        "yy:yy",
-                        null,
-                        null
-                    )
-                )
-            }
+                    OkHttpClient.Builder().build().newCall(req).execute().use {
+                        val jsonArr = JSONObject(it.body!!.string()).getJSONArray("data")
 
-            classList.sortBy {
-                SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(it.date)
-            }
+                        with(arrayListOf<ClassF>()) {
+                            for (i in 0 until jsonArr.length()) {
+                                val e = jsonArr.get(i) as JSONObject
 
-            return classList
-        }
+                                add(
+                                    ClassF(
+                                        e.getInt("id"),
+                                        e.getString("shift"),
+                                        e.getString("date"),
+                                        e.getString("teacher"),
+                                        e.getString("subjectId"),
+                                        e.getString("subjectName"),
+                                        e.getString("room"),
+                                        e.getString("onlineLink"),
+                                        e.getString("location"),
+                                        e.getString("periodFrom"),
+                                        e.getString("periodTo"),
+                                        e.getString("details")
+                                    )
+                                )
+                            }
 
-        fun getClasses(res: (ArrayList<ClassF>) -> Unit) {
-            res.invoke(getClasses())
+                            Handler(Looper.getMainLooper()).post {
+                                res.invoke(this)
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    // error
+                }
+            }.start()
         }
     }
 }

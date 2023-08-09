@@ -37,6 +37,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.github.lukelorusso:VerticalSeekBar:1.2.7")
     implementation("com.github.vipulasri:timelineview:1.1.5")
+    implementation("io.noties.markwon:core:4.6.2")
     implementation("com.github.arover:moment:1.8")
     implementation("com.google.android.gms:play-services-auth:20.6.0")
 

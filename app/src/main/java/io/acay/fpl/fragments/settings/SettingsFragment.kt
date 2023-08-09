@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.squareup.picasso.Picasso
 import io.acay.fpl.R
 import io.acay.fpl.activity.AuthActivity
+import io.acay.fpl.fragments.notes.NotesFragment
 import java.util.Calendar
 
 class SettingsFragment : Fragment(R.layout.settings_fragment) {
@@ -92,6 +93,11 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                         }
                     }
                 }
+            }
+
+            // buttons
+            findViewById<AppCompatButton>(R.id.fragment_settings_notes_btn).setOnClickListener {
+                NotesFragment().show(childFragmentManager, null)
             }
         }
     }

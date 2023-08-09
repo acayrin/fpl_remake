@@ -1,11 +1,10 @@
 package io.acay.fpl.fragments.classes.sub
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -18,13 +17,26 @@ import io.acay.fpl.service.ClassListService
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.Random
 
 class UpcomingClassesFragment : Fragment(R.layout.classes_fragment_sub_upcoming) {
-    private val classList = ClassListService.getClasses()
+    private val classList = arrayListOf<ClassF>()
     private lateinit var recyclerAdapter: UpcomingClassesAdapter
+
+    fun commitSearch(clause: String?) {
+        ClassListService.getClasses(clause) {
+            classList.clear()
+            classList.addAll(it)
+            recyclerAdapter.update(it)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ClassListService.getClasses(null) {
+            classList.addAll(it)
+            recyclerAdapter.update(it)
+        }
 
         view.findViewById<RecyclerView>(R.id.classes_fragment_sub_upcoming_recycler)
             .let { recyclerView ->
@@ -41,7 +53,8 @@ class UpcomingClassesFragment : Fragment(R.layout.classes_fragment_sub_upcoming)
                 recyclerView.scrollToPosition(pos)
 
                 recyclerAdapter.onItemRendered = { c, viewHolder, viewType ->
-                    val sp = requireContext().getSharedPreferences("cn_${c.id}", Context.MODE_PRIVATE)
+                    val sp =
+                        requireContext().getSharedPreferences("cn_${c.id}", Context.MODE_PRIVATE)
                     val before = SimpleDateFormat(
                         "yyyy-MM-dd HH:mm:ss", Locale.US
                     ).parse(c.date)!!.time < Date().time
@@ -78,12 +91,11 @@ class UpcomingClassesFragment : Fragment(R.layout.classes_fragment_sub_upcoming)
                     if (!sp.getString("content", null).isNullOrEmpty()) {
                         viewHolder.timestamp.text = "${viewHolder.timestamp.text}\n(noted)"
                     } else {
-                        viewHolder.timestamp.text = viewHolder.timestamp.text.replace(Regex("\n(noted)"), "")
+                        viewHolder.timestamp.text =
+                            viewHolder.timestamp.text.replace(Regex("\n(noted)"), "")
                     }
 
                     viewHolder.selfNote.apply {
-                        if (context == null) return@apply
-
                         setText(sp.getString("content", null))
 
                         doOnTextChanged { text, _, _, _ ->

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.acay.fpl.R
 import io.acay.fpl.model.Article
+import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 
 class ArticleDrawerFragment(private val article: Article) :
@@ -21,6 +22,8 @@ class ArticleDrawerFragment(private val article: Article) :
         articleTitle.text = article.title
         articleAuthor.text = article.author
         articleTimestamp.text = article.timestamp
-        articleContent.text = article.content
+
+        val md = Markwon.create(requireContext())
+        md.setMarkdown(articleContent, article.content)
     }
 }

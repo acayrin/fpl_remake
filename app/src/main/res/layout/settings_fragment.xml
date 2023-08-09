@@ -108,6 +108,8 @@
         android:clipToOutline="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
+        android:paddingTop="48dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/settings_fragment_timeline_item_even" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

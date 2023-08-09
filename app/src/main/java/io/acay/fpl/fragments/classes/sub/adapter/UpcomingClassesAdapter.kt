@@ -48,6 +48,12 @@ class UpcomingClassesAdapter(private val list: ArrayList<ClassF>) :
             itemView.findViewById(R.id.classes_fragment_card_base_content)
     }
 
+    fun update(new: ArrayList<ClassF>) {
+        list.clear()
+        list.addAll(new)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.classes_fragment_recycler_item, parent, false)
@@ -56,30 +62,27 @@ class UpcomingClassesAdapter(private val list: ArrayList<ClassF>) :
 
     override fun getItemCount(): Int = list.size
 
-    override fun getItemViewType(position: Int): Int {
-        return TimelineView.getTimeLineViewType(position, itemCount)
-    }
+    override fun getItemViewType(position: Int): Int
+        = TimelineView.getTimeLineViewType(position, itemCount)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val c = list[position]
 
         holder.period.text = "Shift ${c.shift}"
-        holder.room.text = c.onlineLink ?: c.room
+        holder.room.text = c.onlineLink?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: c.room
         holder.subjectName.text = c.subjectName
         holder.timestamp.text =
             java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(c.date)?.let {
-                DateUtils.getRelativeTimeSpanString(
-                    it.time
-                )
+                DateUtils.getRelativeTimeSpanString(it.time)
             }
 
         // expandable content
         holder.location.text = c.location
-        holder.duration.text = "${c.durationFrom} - ${c.durationTo}"
+        holder.duration.text = "${c.periodFrom} - ${c.periodTo}"
         holder.teacher.text = c.teacher
         holder.subjectId.text = c.subjectId
-        holder.onlineLink.text = c.onlineLink
-        holder.details.text = c.details
+        holder.onlineLink.text = c.onlineLink?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: ""
+        holder.details.text = c.details?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: ""
 
         holder.clickableContent.setOnClickListener {
             holder.expandableContent.visibility =

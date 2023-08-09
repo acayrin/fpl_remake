@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
@@ -19,8 +17,7 @@ import io.acay.fpl.fragments.news.ArticleDrawerFragment
 import io.acay.fpl.fragments.news.sub.adapter.GeneralNewsAdapter
 import io.acay.fpl.model.Article
 import io.acay.fpl.service.LatestNewsService
-import okhttp3.OkHttpClient
-import org.json.JSONObject
+import io.noties.markwon.Markwon
 
 class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
     private lateinit var recyclerAdapter: GeneralNewsAdapter
@@ -93,17 +90,15 @@ class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
             title.apply { text = article.title }
             author.apply { text = article.author }
             timestamp.apply { text = article.timestamp }
-            content.apply {
-                with(article.content.split(" ")) {
-                    if (size > 30) {
-                        text = subList(0, 30).joinToString(" ")
-                        text = "${text}..."
-                        readMore.visibility = View.VISIBLE
-                    } else {
-                        text = joinToString(" ")
-                        readMore.visibility = View.GONE
-                    }
+            with(article.content.split(" ")) {
+                var text = joinToString(" ")
+                if (size > 30) {
+                    text = "${subList(0, 30).joinToString(" ")}..."
+                    readMore.visibility = View.VISIBLE
+                } else {
+                    readMore.visibility = View.GONE
                 }
+                Markwon.create(requireContext()).setMarkdown(content, text)
             }
 
             readMore.setOnClickListener {

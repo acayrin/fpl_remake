@@ -17,19 +17,18 @@
         android:clipToPadding="false">
 
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/classes_fragment_card_subject_timestamp"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/badge_timeline_date"
-            android:padding="8dp"
             android:gravity="center"
+            android:padding="8dp"
             android:text="{date}"
-            android:textStyle="bold"
             android:textColor="@color/background"
             android:textSize="12sp"
-            android:layout_gravity="center" />
+            android:textStyle="bold" />
 
         <com.github.vipulasri.timelineview.TimelineView
             android:id="@+id/timeline"
@@ -37,9 +36,9 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             app:endLineColor="@color/primary_dimmed"
+            app:linePadding="8dp"
             app:lineWidth="2dp"
             app:marker="@color/primary"
-            app:linePadding="8dp"
             app:markerSize="12dp"
             app:startLineColor="@color/primary" />
 
@@ -262,21 +261,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Self note:"
+                        android:textColor="@color/background"
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/classes_fragment_card_local_note"
-                        android:background="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text|textMultiLine"
+                        android:background="@color/white"
                         android:hint="Write something..."
-                        android:textSize="14sp"
-                        android:textColor="@color/background" />
+                        android:textColorHint="@color/background_light"
+                        android:inputType="text|textMultiLine"
+                        android:textColor="@color/background"
+                        android:textSize="14sp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>

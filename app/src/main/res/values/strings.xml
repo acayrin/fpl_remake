@@ -8,4 +8,5 @@
     <string name="classes_fragment_tab_upcoming">Lịch học</string>
     <string name="classes_fragment_tab_exams">Lịch thi</string>
     <string name="read_more">Read more</string>
+    <string name="fragment_classes_search_bar">Search for anything...</string>
 </resources>

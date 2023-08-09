@@ -4,17 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.squareup.picasso.Picasso
 import io.acay.fpl.R
 import io.acay.fpl.fragments.NotificationListFragment
@@ -22,10 +20,11 @@ import io.acay.fpl.fragments.news.ArticleDrawerFragment
 import io.acay.fpl.service.ClassListService
 import io.acay.fpl.service.LatestNewsService
 import io.acay.fpl.service.sqlite.NotificationStore
+import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.Locale.*
+import java.util.Locale.US
 
 class HomeFragment : Fragment(R.layout.overview_fragment_main) {
     private var user: GoogleSignInAccount? = null
@@ -35,7 +34,7 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
     private lateinit var nContent: AppCompatTextView
     private lateinit var nReadMore: AppCompatButton
 
-//    private lateinit var cBaseContent: LinearLayoutCompat
+    //    private lateinit var cBaseContent: LinearLayoutCompat
 //    private lateinit var cExpandableContent: LinearLayoutCompat
     private lateinit var cShift: AppCompatTextView
     private lateinit var cRoom: AppCompatTextView
@@ -95,12 +94,15 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
             }
 
             // Upcoming class
-            ClassListService.getClasses { list ->
-                val latest = list[list.indexOfFirst {
+            ClassListService.getClasses(null) { list ->
+                val index = list.indexOfFirst {
                     SimpleDateFormat(
                         "yyyy-MM-dd HH:mm:ss", US
                     ).parse(it.date)!!.time >= Date().time
-                }]
+                }
+                if (index < 0) return@getClasses
+
+                val latest = list[index]
 
                 val relativeTime =
                     SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(latest.date)?.let {
@@ -109,21 +111,22 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
                         )
                     }
                 cShift.text = "Shift ${latest.shift} - ${relativeTime}"
-                cRoom.text = latest.room
+                cRoom.text = latest.onlineLink?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: latest.room
                 cSubject.text = latest.subjectName
                 cLocation.text = latest.location
                 cSubjectId.text = latest.subjectId
                 cTeacher.text = latest.teacher
-                cDuration.text = "${latest.durationFrom}-${latest.durationTo}"
-                cOnlineLink.text = latest.onlineLink
-                cDetails.text = latest.details
+                cDuration.text = "${latest.periodFrom}-${latest.periodTo}"
+                cOnlineLink.text = latest.onlineLink?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: ""
+                cDetails.text = latest.details?.takeIf { s -> s.isNotEmpty() && s != "null"} ?: ""
 
 //                cBaseContent.setOnClickListener {
 //                    cExpandableContent.visibility =
 //                        if (cExpandableContent.visibility == View.GONE) View.VISIBLE else View.GONE
 //                }
 
-                val sp = requireContext().getSharedPreferences("cn_${latest.id}", Context.MODE_PRIVATE)
+                val sp =
+                    requireContext().getSharedPreferences("cn_${latest.id}", Context.MODE_PRIVATE)
                 cSelfNote.apply {
                     if (context == null) return@apply
 
@@ -142,27 +145,25 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
                 nTitle.text = latest.title
                 nAuthor.text = latest.author
                 nTimestamp.text =
-                    java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", US).parse(latest.timestamp)
-                        ?.let {
-                            DateUtils.getRelativeTimeSpanString(
-                                it.time
-                            )
-                        }
-                nReadMore.let { readMore ->
-                    with(latest.content.split(" ")) {
-                        if (size > 30) {
-                            nContent.text = subList(0, 30).joinToString(" ")
-                            nContent.text = "${nContent.text}..."
-                            readMore.visibility = View.VISIBLE
-                        } else {
-                            nContent.text = joinToString(" ")
-                            readMore.visibility = View.GONE
-                        }
+                    SimpleDateFormat("yyyy-MM-dd HH:mm:ss", US).parse(latest.timestamp)
+                        ?.let { sdf -> DateUtils.getRelativeTimeSpanString(sdf.time) }
+
+                with(latest.content.split(" ")) {
+                    var text = joinToString(" ")
+                    if (size > 30) {
+                        text = "${subList(0, 30).joinToString(" ")}..."
+
+                        nReadMore.visibility = View.VISIBLE
+                    } else {
+                        nReadMore.visibility = View.GONE
                     }
 
-                    readMore.setOnClickListener {
-                        ArticleDrawerFragment(latest).show(childFragmentManager, null)
-                    }
+                    val md = Markwon.create(context)
+                    md.setMarkdown(nContent, text)
+                }
+
+                nReadMore.setOnClickListener {
+                    ArticleDrawerFragment(latest).show(childFragmentManager, null)
                 }
             }
         }

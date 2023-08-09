@@ -15,10 +15,23 @@
         app:tabSelectedTextColor="@color/primary"
         app:tabTextColor="@color/primary" />
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/classes_fragment_search_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/article_background"
+        android:drawableEnd="@drawable/vec_search"
+        android:drawableTint="@color/background_light"
+        android:hint="@string/fragment_classes_search_bar"
+        android:padding="12dp"
+        android:textColor="@color/background"
+        android:textColorHint="@color/background_light" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/classes_fragment_tab_layout_view_pager"
-        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1" />
 </androidx.appcompat.widget.LinearLayoutCompat>
