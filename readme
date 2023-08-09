@@ -1,0 +1,22 @@
+## FPL app re-written cuz aids
+
+### it does
+- google login
+- auto session renewal
+- push notification without any api cuz i didn't implement one
+- notification center (or just a list with clickable item / read all button)
+- timeline recycler view for news / classes
+- self note for classes
+- (!) classes fuzzy search (fields, date comparison and any% match)
+- mini note app inside the app itself
+- (!) custom theme, inspired by the NES.css repo, also fuck mainstream theme and Material You (actually no i still love MU), oh and no corner radius
+- markdown viewer for pretty much anything possible
+- only 2 activities and 99 fucking fragments
+
+### tba
+- grade check
+- check-in check
+- event portal
+- mini tasks app
+- services
+- support
