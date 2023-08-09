@@ -3,18 +3,18 @@ package io.acay.fpl.service
 import android.os.Handler
 import android.os.Looper
 import io.acay.fpl.model.Article
+import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import org.json.JSONObject
 
 class LatestNewsService {
     companion object {
-        fun getArticles(type: Int?, res: (ArrayList<Article>) -> Unit) {
+        fun getArticles(t: String, type: Int?, res: (ArrayList<Article>) -> Unit) {
             Thread {
                 try {
-                    val req =
-                        okhttp3.Request.Builder()
-                            .url("http://acay.atwebpages.com/asm/api/getPosts.php?t=${type ?: 0}")
-                            .get().build()
+                    val req = okhttp3.Request.Builder()
+                        .url("http://acay.atwebpages.com/asm/api/getPosts.php")
+                        .post(FormBody.Builder().add("t", t).build()).build()
 
                     OkHttpClient.Builder().build().newCall(req).execute().use {
                         val jsonArr = JSONObject(it.body!!.string()).getJSONArray("data")
@@ -39,7 +39,7 @@ class LatestNewsService {
                             }
                         }
                     }
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     // error
                 }
             }.start()

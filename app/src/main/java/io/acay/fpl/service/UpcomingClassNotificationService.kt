@@ -1,12 +1,12 @@
 package io.acay.fpl.service
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.Manifest
 import android.content.pm.PackageManager
 import android.os.IBinder
 import android.util.Log
@@ -27,8 +27,6 @@ class UpcomingClassNotificationService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // TODO implements an API pull that checks for upcoming classes and send notification about them
-
         Thread {
             while (true) {
                 val value = Notification(

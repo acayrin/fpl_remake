@@ -15,7 +15,7 @@
         app:tabSelectedTextColor="@color/primary"
         app:tabTextColor="@color/primary" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
         android:id="@+id/classes_fragment_search_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

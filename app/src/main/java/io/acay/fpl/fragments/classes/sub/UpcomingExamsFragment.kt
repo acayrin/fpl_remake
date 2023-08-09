@@ -17,13 +17,13 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class UpcomingClassesFragment : Fragment(R.layout.classes_fragment_sub_upcoming), ClassFragment {
+class UpcomingExamsFragment : Fragment(R.layout.classes_fragment_sub_upcoming), ClassFragment {
     private val classList = arrayListOf<ClassF>()
     private lateinit var recyclerAdapter: UpcomingClassesAdapter
     private lateinit var t: String
 
     override fun commitSearch(clause: String?) {
-        ClassListService.getClasses(t, clause, 0) {
+        ClassListService.getClasses(t, clause, 1) {
             classList.clear()
             classList.addAll(it)
             recyclerAdapter.update(it)
@@ -44,7 +44,7 @@ class UpcomingClassesFragment : Fragment(R.layout.classes_fragment_sub_upcoming)
         rv.layoutManager = LinearLayoutManager(requireContext())
         rv.adapter = recyclerAdapter
 
-        ClassListService.getClasses(t, null, 0) {
+        ClassListService.getClasses(t, null, 1) {
             classList.addAll(it)
             recyclerAdapter.update(it)
 

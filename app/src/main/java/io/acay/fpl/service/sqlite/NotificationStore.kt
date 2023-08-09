@@ -36,17 +36,30 @@ class NotificationStore(context: Context) :
         insertNotification(value.title, value.description, value.seen)
     }
 
-    fun setAsSeen(id: Int) {
-        writableDatabase.apply {
-            execSQL("update notifications set seen = 1 where id = \"${id}\"")
-        }
+    fun setAsSeen(id: Int): Boolean {
+        val values = ContentValues()
+        values.put("seen", 1)
+
+        return writableDatabase.update(
+            "notifications", values, "id = ?", arrayOf(id.toString())
+        ) > 0
     }
 
-    fun getNotifications(): ArrayList<Notification> {
+    fun setAllAsSeen(): Boolean {
+        val values = ContentValues()
+        values.put("seen", 1)
+
+        return writableDatabase.update("notifications", values, null, null) > 0
+    }
+
+    fun getNotifications(unread: Boolean = false): ArrayList<Notification> {
         val out = arrayListOf<Notification>()
 
         readableDatabase.apply {
-            val cur = rawQuery("select * from notifications order by timestamp desc", null)
+            val cur = rawQuery(
+                "select * from notifications ${if (unread) "where seen = 0" else ""} order by timestamp desc",
+                null
+            )
             if (cur.moveToFirst()) {
                 do {
                     out.add(

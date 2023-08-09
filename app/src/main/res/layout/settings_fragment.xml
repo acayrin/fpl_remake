@@ -10,20 +10,16 @@
     android:gravity="bottom"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/__fragment_settings_avatar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/article_background"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/__fragments_settings_bio"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@id/__fragments_settings_bio">
+            android:padding="12dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/fragment_settings_avatar"
@@ -50,16 +46,12 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/__fragments_settings_bio"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:background="@drawable/article_background"
             android:orientation="vertical"
-            android:padding="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/__fragment_settings_avatar"
-            app:layout_constraintLeft_toRightOf="@id/__fragment_settings_avatar"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:padding="12dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragments_settings_bio_name"
@@ -96,7 +88,7 @@
                 android:textColor="@color/background"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_settings_timeline"
@@ -127,7 +119,7 @@
             android:drawableTop="@drawable/vec_grade"
             android:drawablePadding="12dp"
             android:padding="16dp"
-            android:text="My Grades"
+            android:text="My Grades (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
             android:textSize="16sp" />
@@ -143,7 +135,7 @@
             android:drawableTop="@drawable/vec_contacts"
             android:drawablePadding="12dp"
             android:padding="16dp"
-            android:text="Support"
+            android:text="Support (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
             android:textSize="16sp" />
@@ -164,7 +156,7 @@
             android:drawableTop="@drawable/vec_services"
             android:drawablePadding="12dp"
             android:padding="16dp"
-            android:text="Services"
+            android:text="Services (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
             android:textSize="16sp" />
@@ -180,7 +172,7 @@
             android:drawableTop="@drawable/vec_events"
             android:drawablePadding="12dp"
             android:padding="16dp"
-            android:text="Events"
+            android:text="Events (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
             android:textSize="16sp" />

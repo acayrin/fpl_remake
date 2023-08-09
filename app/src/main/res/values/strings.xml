@@ -9,4 +9,16 @@
     <string name="classes_fragment_tab_exams">Lịch thi</string>
     <string name="read_more">Read more</string>
     <string name="fragment_classes_search_bar">Search for anything...</string>
+    <string name="class_local_note_placeholder">Write something...</string>
+    <string name="class_local_note_label">Self note:</string>
+    <string name="class_details_label">Details:</string>
+    <string name="class_olink_label">Online link:</string>
+    <string name="class_duration_label">Duration:</string>
+    <string name="class_teacher_label">Teacher:</string>
+    <string name="class_subjectId_label">Subject ID:</string>
+    <string name="class_location_label">Location:</string>
+    <string name="fragment_overview_upcoming_class">Upcoming class</string>
+    <string name="fragment_overview_latest_news">Latest news</string>
+    <string name="fragment_notifications_read_all">Read all</string>
+    <string name="fragment_notifications_label">Notifications</string>
 </resources>

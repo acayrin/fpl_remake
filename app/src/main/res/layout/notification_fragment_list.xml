@@ -13,15 +13,38 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/badge_light"
-            android:padding="12dp"
-            android:text="Notifications"
-            android:textColor="@color/background"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_light"
+                android:padding="16dp"
+                android:text="@string/fragment_notifications_label"
+                android:textColor="@color/background"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_notification_read_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/badge_light"
+                android:drawableStart="@drawable/vec_drafts"
+                android:drawablePadding="4dp"
+                android:padding="16dp"
+                android:text="@string/fragment_notifications_read_all"
+                android:textColor="@color/background" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_notification_recycler"

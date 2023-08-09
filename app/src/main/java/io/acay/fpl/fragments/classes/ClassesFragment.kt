@@ -3,9 +3,14 @@ package io.acay.fpl.fragments.classes
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils
 import android.util.Base64
 import android.view.View
-import androidx.appcompat.widget.AppCompatEditText
+import android.widget.ArrayAdapter
+import android.widget.MultiAutoCompleteTextView
+import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
@@ -15,13 +20,20 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import io.acay.fpl.R
+import io.acay.fpl.fragments.classes.sub.ClassFragment
 import io.acay.fpl.fragments.classes.sub.UpcomingClassesFragment
+import io.acay.fpl.fragments.classes.sub.UpcomingExamsFragment
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class ClassesFragment : Fragment(R.layout.classes_fragment) {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
-    private lateinit var searchBox: AppCompatEditText
+    private lateinit var searchBox: AppCompatMultiAutoCompleteTextView
     private lateinit var tabs: Array<Pair<Fragment, String>>
 
     private var handler: Handler = Handler(Looper.getMainLooper())
@@ -32,39 +44,58 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
 
         tabs = arrayOf(
             Pair(UpcomingClassesFragment(), getString(R.string.classes_fragment_tab_upcoming)),
-            Pair(UpcomingClassesFragment(), getString(R.string.classes_fragment_tab_exams))
+            Pair(UpcomingExamsFragment(), getString(R.string.classes_fragment_tab_exams))
         )
 
         searchBox = view.findViewById(R.id.classes_fragment_search_box)
-        searchBox.doOnTextChanged { text, _, _, _ ->
-            handler.removeCallbacks(workRunnable)
-            workRunnable = Runnable { commitSearch(text) }
-            handler.postDelayed(workRunnable, 500)
+        with(searchBox) {
+            threshold = 2
+            setTokenizer(SpaceTokenizer())
+            setAdapter(
+                ArrayAdapter(
+                    context,
+                    android.R.layout.select_dialog_item,
+                    searchKeys.map { "${it.first}:" })
+            )
+
+            doOnTextChanged { text, _, _, _ ->
+                handler.removeCallbacks(workRunnable)
+                workRunnable = Runnable { commitSearch(text) }
+                handler.postDelayed(workRunnable, 750)
+            }
         }
 
         viewPager = view.findViewById(R.id.classes_fragment_tab_layout_view_pager)
         viewPager.adapter = PagerAdapter(childFragmentManager, tabs)
 
         tabLayout = view.findViewById(R.id.classes_fragment_tab_layout)
-        tabLayout.let {
-            it.setupWithViewPager(viewPager)
+        tabLayout.let { tabLayout ->
+            tabLayout.setupWithViewPager(viewPager)
 
-            for (p in tabs) {
-                val v = AppCompatTextView(requireContext())
-                v.text = p.second
-                v.textSize = 16F
-                v.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                v.setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
-                it.getTabAt(tabs.indexOf(p))!!.customView = v
+            tabs.forEach { tab ->
+                with(AppCompatTextView(requireContext())) {
+                    text = tab.second
+                    textSize = 16F
+                    textAlignment = View.TEXT_ALIGNMENT_CENTER
+                    setTextColor(ResourcesCompat.getColor(resources, R.color.primary, null))
+                    tabLayout.getTabAt(tabs.indexOf(tab))!!.customView = this
+                }
             }
         }
     }
 
-    private fun commitSearch(query: CharSequence?) {
-        viewPager.adapter?.instantiateItem(viewPager, viewPager.currentItem).apply {
-            val frag = this as UpcomingClassesFragment
+    private class PagerAdapter(
+        fm: FragmentManager, private val tabs: Array<Pair<Fragment, String>>
+    ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getCount(): Int = tabs.size
+        override fun getItem(position: Int): Fragment = tabs[position].first
+    }
 
-            frag.commitSearch(
+    private fun commitSearch(query: CharSequence?) {
+        (viewPager.adapter?.instantiateItem(
+            viewPager, viewPager.currentItem
+        ) as ClassFragment).apply {
+            commitSearch(
                 if (query.isNullOrEmpty()) null
                 else Base64.encodeToString(
                     generateWhereClause(
@@ -87,6 +118,7 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
         Pair("location", "fl.name"),
         Pair("teacher", "fc.teacher"),
     )
+
     private val conditionalKeys = arrayOf(
         "fc.shift",
         "fc.date",
@@ -107,7 +139,7 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
         // 1. <string>:<string>
         // 2. <string>:"<string1> <string2>"
         // 3. <standalone_string>
-        val queries = "(?:[^\\s\"]+:+((\"[^\"]*\")|(\\S+)))|\\S+".toRegex().findAll(query)
+        val queries = "(?:[^\\s\"]+:\\s?+((\"[^\"]*\")|(\\S+)))|\\S+".toRegex().findAll(query)
             .map { return@map it.value }
 
         // an array list of string pairs <key, value>
@@ -124,13 +156,13 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
                 val s = e.split(":")
 
                 // the key to look up
-                val key = s[0]
+                val key = s[0].trim()
                 // the value to compare
-                val value = s.subList(1, s.size).joinToString(":")
+                val value = s.subList(1, s.size).joinToString(":").trim()
 
                 // if the key is valid then add to the pair list
                 searchKeys.firstOrNull { k -> k.first.equals(key, true) }?.apply {
-                    b.add(Pair(second, value.replace("\"", "")))
+                    b.add(Pair(first, value.replace("\"", "")))
                 }
             } else {
                 // else concat the string to the excessive one
@@ -154,8 +186,57 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
 
             // loop through list of key:value
             first.forEach {
-                // append query (<key> LIKE "%<value>%")
-                q += "${it.first} LIKE \"%${it.second}%\""
+                val field = searchKeys.find { z -> z.first == it.first }!!.second
+
+                if (it.first in arrayOf("day", "month", "date")) {
+                    // special case querying dates
+                    val comparator =
+                        if (it.second.contentEquals("+=") || it.second.contentEquals("=+") || it.second.contains(
+                                ">="
+                            ) || it.second.contains("=>")
+                        ) ">="
+                        else if (it.second.contentEquals("-=") || it.second.contentEquals("=-") || it.second.contains(
+                                "<="
+                            ) || it.second.contentEquals("=<")
+                        ) "<="
+                        else if (it.second.contains("+") || it.second.contains(">")) ">"
+                        else if (it.second.contains("-") || it.second.contains("<")) "<"
+                        else "="
+                    // cleaned value
+                    var value = it.second.replace(Regex("[><\\-=+]"), "")
+
+                    // this only applies when the key is (date)
+                    if (it.first == "date") {
+                        // try to parse the date, following the dd/MM/yyyy format
+                        var date: Date? = null
+                        try {
+                            date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(value)
+                        } catch (_: ParseException) {
+                            try {
+                                date = SimpleDateFormat("dd/MM", Locale.getDefault()).parse(value)
+                                date.year = Calendar.getInstance().get(Calendar.YEAR) - 1900
+                            } catch (_: ParseException) {
+                                try {
+                                    date = SimpleDateFormat("dd", Locale.getDefault()).parse(value)
+                                    date.year = Calendar.getInstance().get(Calendar.YEAR) - 1900
+                                    date.month = Calendar.getInstance().get(Calendar.MONTH)
+                                } catch (_: ParseException) {
+                                    // ignore
+                                }
+                            }
+                        }
+
+                        // set the correct value to compare with database
+                        if (date != null) {
+                            value = "${date.year + 1900}-${date.month + 1}-${date.date}"
+                        }
+                    }
+
+                    q += "$field $comparator \"$value\""
+                } else {
+                    // append query (<key> LIKE "%<value>%")
+                    q += "$field LIKE \"%${it.second}%\""
+                }
 
                 // if the current pair isn't the last, append (AND)
                 if (query.first.indexOf(it) != query.first.size - 1) q += " AND "
@@ -163,8 +244,9 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
 
             // append additional clauses using excessive queries
             if (second.isNotEmpty()) {
-                // append AND if key search is requested with parentheses for grouping
-                if (first.isNotEmpty()) q += " AND ("
+                // append AND if key search is requested
+                if (first.isNotEmpty()) q += " AND "
+                q += "(" // start grouping
 
                 // loop through all the keys
                 conditionalKeys.forEach { k ->
@@ -175,17 +257,56 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
                     if (conditionalKeys.indexOf(k) != conditionalKeys.size - 1) q += " OR "
                 }
 
-                if (first.isNotEmpty()) q += ")" // close the grouping
+                q += ")" // close the grouping
             }
         }
 
         return q // return the (WHERE) clause
     }
 
-    private class PagerAdapter(
-        fm: FragmentManager, private val tabs: Array<Pair<Fragment, String>>
-    ) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = tabs.size
-        override fun getItem(position: Int): Fragment = tabs[position].first
+
+    inner class SpaceTokenizer : MultiAutoCompleteTextView.Tokenizer {
+        private val i = 0
+        override fun findTokenStart(inputText: CharSequence, cursor: Int): Int {
+            var idx = cursor
+            while (idx > 0 && inputText[idx - 1] != ' ') {
+                idx--
+            }
+            while (idx < cursor && inputText[idx] == ' ') {
+                idx++
+            }
+            return idx
+        }
+
+        override fun findTokenEnd(inputText: CharSequence, cursor: Int): Int {
+            var idx = cursor
+            val length = inputText.length
+            while (idx < length) {
+                if (inputText[i] == ' ') {
+                    return idx
+                } else {
+                    idx++
+                }
+            }
+            return length
+        }
+
+        override fun terminateToken(inputText: CharSequence): CharSequence {
+            var idx = inputText.length
+            while (idx > 0 && inputText[idx - 1] == ' ') {
+                idx--
+            }
+            return if (idx > 0 && inputText[idx - 1] == ' ') {
+                inputText
+            } else {
+                if (inputText is Spanned) {
+                    val sp = SpannableString("$inputText ")
+                    TextUtils.copySpansFrom(inputText, 0, inputText.length, Any::class.java, sp, 0)
+                    sp
+                } else {
+                    "$inputText "
+                }
+            }
+        }
     }
 }

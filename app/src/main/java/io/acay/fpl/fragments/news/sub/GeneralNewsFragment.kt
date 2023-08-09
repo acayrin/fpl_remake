@@ -21,11 +21,18 @@ import io.noties.markwon.Markwon
 
 class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
     private lateinit var recyclerAdapter: GeneralNewsAdapter
+    private lateinit var t: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        LatestNewsService.getArticles(null) {
+        if (context != null) {
+            t = requireContext().getSharedPreferences(
+                "fpl_u", Context.MODE_PRIVATE
+            ).getString("t", "")!!
+        }
+
+        LatestNewsService.getArticles(t, null) {
             renderLatestArticle(it[0])
             recyclerAdapter.update(it)
         }

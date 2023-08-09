@@ -56,13 +56,16 @@ class NotesFragment : BottomSheetDialogFragment(R.layout.notes_list) {
                 inputTitle.doOnTextChanged { text, _, _, _ -> txtTitle = text.toString() }
                 inputContent.doOnTextChanged { text, _, _, _ -> txtContent = text.toString() }
 
-                btnCancel.setOnClickListener { dismiss() }
+                btnCancel.setOnClickListener { d.dismiss() }
                 btnCreate.setOnClickListener {
                     if (txtContent.isNotEmpty() && txtTitle.isNotEmpty() && store.insertNote(
                             txtTitle, txtContent
                         )
                     ) {
                         d.dismiss()
+
+                        notes = store.getNotes()
+                        recyclerAdapter.notifyItemInserted(0)
                     } else {
                         Toast.makeText(context, "Failed to create note", Toast.LENGTH_SHORT).show()
                     }
