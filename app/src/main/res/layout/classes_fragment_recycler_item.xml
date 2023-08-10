@@ -24,10 +24,10 @@
             android:layout_gravity="center"
             android:background="@drawable/badge_timeline_date"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="@dimen/_padding"
             android:text="{date}"
             android:textColor="@color/background"
-            android:textSize="12sp"
+            android:textSize="@dimen/_text_size_small"
             android:textStyle="bold" />
 
         <com.github.vipulasri.timelineview.TimelineView
@@ -46,16 +46,13 @@
             android:id="@+id/classes_fragment_card_base_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/_margin_top"
+            android:layout_marginBottom="@dimen/_margin_bottom"
             android:background="@drawable/article_background"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp"
+            android:padding="@dimen/_padding_large"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -68,13 +65,12 @@
                     android:id="@+id/classes_fragment_card_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-8dp"
-                    android:layout_marginTop="-45dp"
+                    android:layout_marginTop="-36dp"
                     android:background="@color/white"
-                    android:padding="8dp"
+                    android:padding="@dimen/_padding_small"
                     android:text="{period}"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_text_size_small"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -86,13 +82,12 @@
                     android:id="@+id/classes_fragment_card_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-8dp"
-                    android:layout_marginTop="-45dp"
+                    android:layout_marginTop="-36dp"
                     android:background="@color/white"
-                    android:padding="8dp"
+                    android:padding="@dimen/_padding_small"
                     android:text="{room}"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_text_size_small"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -107,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:text="{subject_name}"
                     android:textColor="@color/background"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_text_size_large"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -115,7 +110,7 @@
                 android:id="@+id/classes_fragment_card_expandable_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/_margin_top"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -130,7 +125,7 @@
                         android:layout_weight="1"
                         android:text="Location:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_location"
@@ -139,7 +134,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{location}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -153,7 +148,7 @@
                         android:layout_weight="1"
                         android:text="Subject ID:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_subject_id"
@@ -162,7 +157,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{subject_id}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -176,7 +171,7 @@
                         android:layout_weight="1"
                         android:text="Teacher:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_teacher"
@@ -185,7 +180,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{teacher}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -199,7 +194,7 @@
                         android:layout_weight="1"
                         android:text="Duration:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_duration"
@@ -208,7 +203,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{duration}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -222,7 +217,7 @@
                         android:layout_weight="1"
                         android:text="Online link:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_online_link"
@@ -231,7 +226,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{online_link}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -245,7 +240,7 @@
                         android:layout_weight="1"
                         android:text="Details:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/classes_fragment_card_details"
@@ -254,7 +249,7 @@
                         android:layout_marginStart="6dp"
                         android:text="{details}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -267,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:text="Self note:"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/classes_fragment_card_local_note"
@@ -275,9 +270,9 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:hint="Write something..."
-                        android:textColorHint="@color/background_light"
                         android:inputType="text|textMultiLine"
                         android:textColor="@color/background"
+                        android:textColorHint="@color/background_light"
                         android:textSize="14sp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>

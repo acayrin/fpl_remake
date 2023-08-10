@@ -14,7 +14,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="@dimen/_margin_bottom">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -44,10 +44,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/badge_light"
-                    android:padding="16dp"
+                    android:padding="@dimen/_padding"
                     android:text="{greeting}"
                     android:textColor="@color/background"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_text_size_normal"
                     app:layout_constraintLeft_toRightOf="@id/fragment_overview_avatar"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -64,22 +64,23 @@
                 android:layout_gravity="end"
                 android:background="@drawable/badge_light"
                 android:drawableEnd="@drawable/vec_notification"
-                android:drawablePadding="3dp"
-                android:padding="16dp"
+                android:drawablePadding="4dp"
+                android:padding="@dimen/_padding"
                 android:text="{notification}"
                 android:textColor="@color/background"
-                android:textSize="18sp"
+                android:textSize="@dimen/_text_size_normal"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="@dimen/_margin_top">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
@@ -90,14 +91,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/badge_light"
-                android:padding="16dp"
+                android:padding="@dimen/_padding"
                 android:text="@string/fragment_overview_upcoming_class"
                 android:textColor="@color/background"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_text_size_normal" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
@@ -109,20 +110,17 @@
             android:id="@+id/fragment_overview_class_base_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/_margin_top"
+            android:layout_marginBottom="@dimen/_margin_bottom"
             android:background="@drawable/article_background"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:padding="@dimen/_padding">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:orientation="horizontal">
 
@@ -130,13 +128,12 @@
                     android:id="@+id/fragment_overview_class_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-8dp"
-                    android:layout_marginTop="-45dp"
+                    android:layout_marginTop="-36dp"
                     android:background="@color/white"
-                    android:padding="8dp"
+                    android:padding="@dimen/_padding_small"
                     android:text="{period}"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_text_size_large"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -148,13 +145,12 @@
                     android:id="@+id/fragment_overview_class_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-8dp"
-                    android:layout_marginTop="-45dp"
+                    android:layout_marginTop="-36dp"
                     android:background="@color/white"
-                    android:padding="8dp"
+                    android:padding="@dimen/_padding_small"
                     android:text="{room}"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_text_size_large"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -169,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:text="{subject_name}"
                     android:textColor="@color/background"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_text_size_large"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -192,16 +188,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_location_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{location}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -215,16 +210,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_subjectId_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_subject_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{subject_id}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -238,16 +232,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_teacher_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_teacher"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{teacher}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -261,16 +254,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_duration_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{duration}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -284,16 +276,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_olink_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_online_link"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{online_link}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -307,16 +298,15 @@
                         android:layout_weight="1"
                         android:text="@string/class_details_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/fragment_overview_class_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
                         android:text="{details}"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -329,7 +319,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/class_local_note_label"
                         android:textColor="@color/background"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_text_size_small" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/fragment_overview_class_local_note"
@@ -338,9 +328,9 @@
                         android:background="@color/white"
                         android:hint="@string/class_local_note_placeholder"
                         android:inputType="text|textMultiLine"
-                        android:textColorHint="@color/background_light"
                         android:textColor="@color/background"
-                        android:textSize="14sp" />
+                        android:textColorHint="@color/background_light"
+                        android:textSize="@dimen/_text_size_small" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -348,11 +338,12 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="@dimen/_margin_top"
+            android:layout_marginBottom="@dimen/_margin_top">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
@@ -362,14 +353,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/badge_light"
-                android:padding="16dp"
+                android:padding="@dimen/_padding"
                 android:text="@string/fragment_overview_latest_news"
                 android:textColor="@color/background"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_text_size_normal" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="3dp"
+                android:layout_height="2dp"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
@@ -381,29 +372,24 @@
             android:id="@+id/fragment_news_sub_general_latest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="@dimen/_margin_top"
+            android:layout_marginBottom="@dimen/_margin_bottom"
             android:background="@drawable/article_background"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingStart="24dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
+            android:padding="@dimen/_padding">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragment_overview_news_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-8dp"
-                android:layout_marginTop="-38dp"
+                android:layout_marginTop="-36dp"
                 android:background="@color/white"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
+                android:padding="@dimen/_padding_small"
                 android:text="{title}"
                 android:textColor="@color/primary"
-                android:textSize="22sp" />
+                android:textSize="@dimen/_text_size_large" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -415,38 +401,38 @@
                     android:layout_height="wrap_content"
                     android:text="{author}"
                     android:textColor="@color/background"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_text_size_small" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fragment_overview_news_timestamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12sp"
+                    android:layout_marginStart="@dimen/_margin_small"
                     android:text="{timestamp}"
                     android:textColor="@color/background"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_text_size_small" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragment_overview_news_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/_margin_top"
                 android:text="{content}"
                 android:textColor="@color/background"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_text_size_normal" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/fragment_overview_news_readmore"
+                android:id="@+id/fragment_overview_news_read_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_margin_top"
                 android:background="@drawable/badge_light"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
+                android:padding="@dimen/_padding"
                 android:text="@string/read_more"
-                android:textColor="@color/background" />
+                android:textColor="@color/background"
+                android:textSize="@dimen/_text_size_small" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

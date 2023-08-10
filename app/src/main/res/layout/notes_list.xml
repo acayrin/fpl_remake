@@ -4,10 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/article_background"
-    android:clipChildren="false"
-    android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="@dimen/_padding">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -18,10 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/badge_light"
-            android:padding="16dp"
-            android:text="My notes"
+            android:padding="@dimen/_padding"
+            android:text="@string/notes_list_label"
             android:textColor="@color/background"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
 
         <TextView
             android:layout_width="0dp"
@@ -35,8 +33,9 @@
             android:background="@drawable/badge_light"
             android:drawableStart="@drawable/vec_note_add"
             android:drawablePadding="4dp"
-            android:padding="16dp"
-            android:text="Add"
+            android:padding="@dimen/_padding"
+            android:text="@string/notes_list_button_label"
+            android:textSize="@dimen/_text_size_small"
             android:textColor="@color/background" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -44,7 +43,7 @@
         android:id="@+id/fragment_notes_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/_margin_top"
         android:layout_weight="1"
         android:clipChildren="false"
         android:clipToPadding="false"

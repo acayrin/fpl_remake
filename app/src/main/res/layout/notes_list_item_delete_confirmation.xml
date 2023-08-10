@@ -9,40 +9,19 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notes_list_add_title_label"
+        android:layout_marginBottom="@dimen/_margin_bottom"
+        android:text="@string/notes_list_delete_label"
         android:textColor="@color/primary_dimmed"
         android:textSize="@dimen/_text_size_large"
         android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/note_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/article_background"
-        android:hint="@string/notes_list_add_title_placeholder"
-        android:padding="12dp"
+        android:text="@string/notes_list_delete_content"
         android:textColor="@color/background"
-        android:textColorHint="@color/background_light" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_margin_top"
-        android:text="@string/notes_list_add_content_label"
-        android:textColor="@color/primary_dimmed"
-        android:textSize="@dimen/_text_size_large"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/note_dialog_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/article_background"
-        android:hint="@string/notes_list_add_content_placeholder"
-        android:inputType="text|textMultiLine"
-        android:padding="@dimen/_padding"
-        android:textColor="@color/background"
-        android:textColorHint="@color/background_light" />
+        android:textSize="@dimen/_text_size_normal" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -56,18 +35,18 @@
             android:layout_height="wrap_content"
             android:background="@drawable/badge_light"
             android:padding="@dimen/_padding"
-            android:text="@string/notes_list_add_btn_cancel"
+            android:text="@string/notes_list_delete_btn_cancel"
             android:textColor="@color/background"
             android:textSize="@dimen/_text_size_small" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/note_dialog_btn_create"
+            android:id="@+id/note_dialog_btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_margin"
             android:background="@drawable/badge_light"
             android:padding="@dimen/_padding"
-            android:text="@string/notes_list_add_btn_create"
+            android:text="@string/notes_list_delete_btn_confirm"
             android:textColor="@color/background"
             android:textSize="@dimen/_text_size_small" />
     </androidx.appcompat.widget.LinearLayoutCompat>

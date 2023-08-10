@@ -12,14 +12,15 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.github.vipulasri.timelineview.TimelineView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.squareup.picasso.Picasso
 import io.acay.fpl.R
 import io.acay.fpl.activity.AuthActivity
 import io.acay.fpl.fragments.notes.NotesFragment
+import io.acay.fpl.hooks.ViewAnimation.Instance.customOnCLick
 import java.util.Calendar
 
 class SettingsFragment : Fragment(R.layout.settings_fragment) {
@@ -60,7 +61,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             timeline.scrollToPosition(Calendar.getInstance().get(Calendar.MONTH))
 
             if (user != null) {
-                Picasso.get().load(user!!.photoUrl).into(iAvatar)
+                Glide.with(context).load(user!!.photoUrl).into(iAvatar)
                 bName.text = user!!.displayName
                 bEmail.text = user!!.email
                 bSemester.text = "Fixed data // SUMMER 2023"
@@ -68,20 +69,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             }
 
             findViewById<AppCompatButton>(R.id.fragment_settings_logout_btn).let { btn ->
-                btn.setOnFocusChangeListener { v, hasFocus ->
-                    (v as AppCompatButton).setTextColor(
-                        resources.getColor(
-                            if (hasFocus) R.color.background else R.color.primary, null
-                        )
-                    )
-                }
-                btn.setOnClickListener { v ->
-                    (v as AppCompatButton).setTextColor(
-                        resources.getColor(
-                            R.color.background, null
-                        )
-                    )
-
+                btn.customOnCLick {
                     requireActivity().let { activity ->
                         GoogleSignIn.getClient(
                             activity,

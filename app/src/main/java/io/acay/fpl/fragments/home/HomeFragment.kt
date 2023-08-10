@@ -1,7 +1,10 @@
 package io.acay.fpl.fragments.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.format.DateUtils
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
@@ -10,19 +13,19 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.squareup.picasso.Picasso
 import io.acay.fpl.R
 import io.acay.fpl.fragments.NotificationListFragment
 import io.acay.fpl.fragments.news.ArticleDrawerFragment
+import io.acay.fpl.hooks.ViewAnimation.Instance.customOnCLick
 import io.acay.fpl.service.ClassListService
 import io.acay.fpl.service.LatestNewsService
 import io.acay.fpl.service.sqlite.NotificationStore
 import io.noties.markwon.Markwon
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 import java.util.Locale.US
 
 class HomeFragment : Fragment(R.layout.overview_fragment_main) {
@@ -33,8 +36,6 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
     private lateinit var nContent: AppCompatTextView
     private lateinit var nReadMore: AppCompatButton
 
-    //    private lateinit var cBaseContent: LinearLayoutCompat
-//    private lateinit var cExpandableContent: LinearLayoutCompat
     private lateinit var cShift: AppCompatTextView
     private lateinit var cRoom: AppCompatTextView
     private lateinit var cSubject: AppCompatTextView
@@ -51,6 +52,7 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
     private lateinit var gText: AppCompatTextView
     private lateinit var t: String
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -72,7 +74,7 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
             nAuthor = findViewById(R.id.fragment_overview_news_author)
             nTimestamp = findViewById(R.id.fragment_overview_news_timestamp)
             nContent = findViewById(R.id.fragment_overview_news_content)
-            nReadMore = findViewById(R.id.fragment_overview_news_readmore)
+            nReadMore = findViewById(R.id.fragment_overview_news_read_more)
 
             cShift = findViewById(R.id.fragment_overview_class_date)
             cRoom = findViewById(R.id.fragment_overview_class_room)
@@ -86,14 +88,29 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
             cSelfNote = findViewById(R.id.fragment_overview_class_local_note)
 
             // data bindings
-            Picasso.get().load(user?.photoUrl).into(iAvatar)
+            Glide.with(context).load(user?.photoUrl).into(iAvatar)
             gText.text = "Greeting, ${user?.displayName ?: "Unknown"}"
             tCount.apply {
-                text = NotificationStore(context).getNotifications(true).size.toString()
+                fun getCount() = NotificationStore(context).getNotifications(true).size.toString()
 
+                // base
+                text = getCount()
+
+                // auto check
+                Thread {
+                    while (true) {
+                        Thread.sleep(10_000)
+                        Handler(Looper.getMainLooper()) {
+                            text = getCount()
+                            return@Handler true
+                        }
+                    }
+                }.start()
+
+                // drawer
                 setOnClickListener {
                     NotificationListFragment {
-                        text = NotificationStore(context).getNotifications(true).size.toString()
+                        text = getCount()
                     }.show(childFragmentManager, null)
                 }
             }
@@ -125,11 +142,6 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
             cOnlineLink.text =
                 latest.onlineLink?.takeIf { s -> s.isNotEmpty() && s != "null" } ?: ""
             cDetails.text = latest.details?.takeIf { s -> s.isNotEmpty() && s != "null" } ?: ""
-
-//                cBaseContent.setOnClickListener {
-//                    cExpandableContent.visibility =
-//                        if (cExpandableContent.visibility == View.GONE) View.VISIBLE else View.GONE
-//                }
 
             if (context != null) {
                 val sp =
@@ -171,6 +183,7 @@ class HomeFragment : Fragment(R.layout.overview_fragment_main) {
                 }
             }
 
+            nReadMore.customOnCLick()
             nReadMore.setOnClickListener {
                 ArticleDrawerFragment(latest).show(childFragmentManager, null)
             }

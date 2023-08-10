@@ -10,7 +10,7 @@
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="12dp"
+        android:padding="@dimen/_padding"
         android:layout_weight="1" />
 
     <com.google.android.material.tabs.TabLayout

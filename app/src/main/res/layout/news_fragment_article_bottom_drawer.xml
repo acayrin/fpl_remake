@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background"
     android:orientation="vertical">
 
@@ -44,20 +44,19 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_weight="1"
         android:background="@drawable/article_background"
         android:padding="12dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/article_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="{content} \n{content}"
+            android:layout_height="wrap_content"
+            android:text="{content}"
             android:textColor="@color/background"
             android:textSize="16sp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

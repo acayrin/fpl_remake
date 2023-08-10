@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
@@ -52,8 +53,7 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
             threshold = 2
             setTokenizer(SpaceTokenizer())
             setAdapter(
-                ArrayAdapter(
-                    context,
+                ArrayAdapter(context,
                     android.R.layout.select_dialog_item,
                     searchKeys.map { "${it.first}:" })
             )
@@ -109,6 +109,7 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
     private val searchKeys = arrayOf(
         Pair("day", "DAY(fc.date)"),
         Pair("month", "MONTH(fc.date)"),
+        Pair("year", "YEAR(fc.date)"),
         Pair("date", "fc.date"),
 
         Pair("subject", "fs.name"),
@@ -117,6 +118,10 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
         Pair("room", "fc.room"),
         Pair("location", "fl.name"),
         Pair("teacher", "fc.teacher"),
+        Pair("details", "fc.details"),
+        Pair("onlineLink", "fc.onlineLink"),
+        Pair("periodFrom", "ft.periodFrom"),
+        Pair("periodTo", "ft.periodTo")
     )
 
     private val conditionalKeys = arrayOf(
@@ -188,22 +193,31 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
             first.forEach {
                 val field = searchKeys.find { z -> z.first == it.first }!!.second
 
+                val isNegate = it.second.indexOf("!") in 0..1
+                val isAlternate = it.second.indexOf("?") in 0..1
+                var value = it.second.replace(Regex("[!?]"), "")
+
+                // if the current pair isn't the last, append (AND)
+                if (query.first.indexOf(it) != 0) q += if (isAlternate) " OR " else " AND "
+
                 if (it.first in arrayOf("day", "month", "date")) {
                     // special case querying dates
-                    val comparator =
-                        if (it.second.contentEquals("+=") || it.second.contentEquals("=+") || it.second.contains(
-                                ">="
-                            ) || it.second.contains("=>")
-                        ) ">="
-                        else if (it.second.contentEquals("-=") || it.second.contentEquals("=-") || it.second.contains(
-                                "<="
-                            ) || it.second.contentEquals("=<")
-                        ) "<="
-                        else if (it.second.contains("+") || it.second.contains(">")) ">"
-                        else if (it.second.contains("-") || it.second.contains("<")) "<"
-                        else "="
+                    val comparator = if (Regex("[+>]").find(it.second) != null) {
+                        if (Regex("=").find(it.second) != null) {
+                            ">="
+                        } else {
+                            ">"
+                        }
+                    } else if (Regex("[-<]").find(it.second) != null) {
+                        if (Regex("=").find(it.second) != null) {
+                            "<="
+                        } else {
+                            "<"
+                        }
+                    } else "="
+
                     // cleaned value
-                    var value = it.second.replace(Regex("[><\\-=+]"), "")
+                    value = it.second.replace(Regex("[><\\-=+]"), "")
 
                     // this only applies when the key is (date)
                     if (it.first == "date") {
@@ -235,11 +249,8 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
                     q += "$field $comparator \"$value\""
                 } else {
                     // append query (<key> LIKE "%<value>%")
-                    q += "$field LIKE \"%${it.second}%\""
+                    q += "$field ${if (isNegate) "NOT " else ""}LIKE \"%$value%\""
                 }
-
-                // if the current pair isn't the last, append (AND)
-                if (query.first.indexOf(it) != query.first.size - 1) q += " AND "
             }
 
             // append additional clauses using excessive queries
@@ -261,9 +272,9 @@ class ClassesFragment : Fragment(R.layout.classes_fragment) {
             }
         }
 
+        Log.i("A", q!!)
         return q // return the (WHERE) clause
     }
-
 
     inner class SpaceTokenizer : MultiAutoCompleteTextView.Tokenizer {
         private val i = 0

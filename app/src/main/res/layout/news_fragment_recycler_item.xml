@@ -19,14 +19,14 @@
             android:id="@+id/fragment_news_item_timestamp"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/badge_timeline_date"
-            android:padding="8dp"
             android:gravity="center"
+            android:padding="@dimen/_padding"
             android:text="{date}"
-            android:textStyle="bold"
             android:textColor="@color/background"
-            android:textSize="12sp"
-            android:layout_gravity="center" />
+            android:textSize="@dimen/_text_size_small"
+            android:textStyle="bold" />
 
         <com.github.vipulasri.timelineview.TimelineView
             android:id="@+id/timeline"
@@ -34,34 +34,30 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
             app:endLineColor="@color/primary_dimmed"
+            app:linePadding="8dp"
             app:lineWidth="2dp"
             app:marker="@color/primary"
-            app:linePadding="8dp"
             app:markerSize="12dp"
             app:startLineColor="@color/primary" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginVertical="@dimen/_margin"
             android:background="@drawable/article_background"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="@dimen/_padding_large">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragment_news_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="-8dp"
                 android:background="@color/white"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:text="{title}"
                 android:textColor="@color/primary"
-                android:textSize="22sp" />
+                android:textSize="@dimen/_text_size_large" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -71,9 +67,9 @@
                     android:id="@+id/fragment_news_item_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="by {author}"
+                    android:text="{author}"
                     android:textColor="@color/background"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/_text_size_small" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!--            <androidx.appcompat.widget.AppCompatTextView-->

@@ -21,4 +21,16 @@
     <string name="fragment_overview_latest_news">Latest news</string>
     <string name="fragment_notifications_read_all">Read all</string>
     <string name="fragment_notifications_label">Notifications</string>
+    <string name="notes_list_label">My notes</string>
+    <string name="notes_list_button_label">Add</string>
+    <string name="notes_list_add_title_label">Title</string>
+    <string name="notes_list_add_title_placeholder">An amazing title</string>
+    <string name="notes_list_add_content_label">Content</string>
+    <string name="notes_list_add_content_placeholder">Your note here</string>
+    <string name="notes_list_add_btn_cancel">Cancel</string>
+    <string name="notes_list_add_btn_create">Create</string>
+    <string name="notes_list_delete_label">Confirm deletion?</string>
+    <string name="notes_list_delete_content">Please confirm whether you want to delete this note or not</string>
+    <string name="notes_list_delete_btn_cancel">Cancel</string>
+    <string name="notes_list_delete_btn_confirm">Delete</string>
 </resources>

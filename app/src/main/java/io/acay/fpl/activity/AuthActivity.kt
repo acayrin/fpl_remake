@@ -5,20 +5,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.widget.LinearLayoutCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import io.acay.fpl.R
+import io.acay.fpl.hooks.ViewAnimation.Instance.customOnCLick
 import io.acay.fpl.service.SessionRenewService
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
@@ -34,44 +36,38 @@ class AuthActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.auth_activity)
+
+        val swapLoader: AppCompatImageView = findViewById(R.id.auth_swap_section_loader)
+        val swapAuth: LinearLayoutCompat = findViewById(R.id.auth_swap_section_auth)
+
+        Glide.with(this)
+            .load("https://media.discordapp.net/attachments/1062430575438344264/1139073814349758574/7GgMHwj.gif")
+            .into(swapLoader)
 
         // set sign in client
         gSignInClient = GoogleSignIn.getClient(this, gSignInOptions)
 
         // check if user is previously logged in
-        GoogleSignIn.getLastSignedInAccount(this)?.let { return signInUser(it) }
+        GoogleSignIn.getLastSignedInAccount(this)?.let {
+            return signInUser(it)
+        }
 
-        // render if not logged in
-        setContentView(R.layout.auth_activity)
+        // display
+        swapLoader.visibility = View.GONE
+        swapAuth.visibility = View.VISIBLE
 
         // proceed with the rest of the activity
         getRandomQuote()
 
         // sign in button
-        findViewById<AppCompatButton>(R.id.auth_activity_signInBtn).let {
-            it.setOnTouchListener { v, event ->
-                var bg = R.drawable.badge_dark
-                var fg = R.color.primary
-
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    startActivityForResult(gSignInClient.signInIntent, RC_SIGN_IN)
-
-                    bg = R.drawable.badge_light
-                    fg = R.color.background
-                }
-
-                v.background = ResourcesCompat.getDrawable(resources, bg, null)
-                it.setTextColor(ResourcesCompat.getColor(resources, fg, null))
-
-                val ico = ResourcesCompat.getDrawable(resources, R.drawable.vec_google_logo, null)
-                ico!!.setTint(ResourcesCompat.getColor(resources, fg, null))
-                it.setCompoundDrawablesWithIntrinsicBounds(ico, null, null, null)
-
-                return@setOnTouchListener v.performClick()
-            }
+        findViewById<AppCompatButton>(R.id.auth_activity_signInBtn).setOnClickListener {
+            (it as AppCompatButton).customOnCLick()
+            startActivityForResult(gSignInClient.signInIntent, RC_SIGN_IN)
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

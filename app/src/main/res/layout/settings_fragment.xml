@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/article_background"
-            android:padding="12dp">
+            android:padding="@dimen/_padding">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/fragment_settings_avatar"
@@ -47,19 +47,19 @@
             android:id="@+id/__fragments_settings_bio"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="@dimen/_margin"
             android:layout_weight="1"
             android:background="@drawable/article_background"
             android:orientation="vertical"
-            android:padding="12dp">
+            android:padding="@dimen/_padding">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragments_settings_bio_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="{name}"
-                android:textColor="@color/background"
-                android:textSize="22sp"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/_text_size_large"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -68,17 +68,17 @@
                 android:layout_height="wrap_content"
                 android:text="{email}"
                 android:textColor="@color/background"
-                android:textSize="18sp"
+                android:textSize="@dimen/_text_size_small"
                 android:textStyle="italic" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragments_settings_bio_branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/_margin_top"
                 android:text="{branch}"
                 android:textColor="@color/background"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_text_size_normal" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/fragments_settings_bio_semester"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:text="{semester}"
                 android:textColor="@color/background"
-                android:textSize="18sp" />
+                android:textSize="@dimen/_text_size_normal" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -118,11 +118,11 @@
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_grade"
             android:drawablePadding="12dp"
-            android:padding="16dp"
+            android:padding="@dimen/_padding"
             android:text="My Grades (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_settings_support_btn"
@@ -134,11 +134,11 @@
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_contacts"
             android:drawablePadding="12dp"
-            android:padding="16dp"
+            android:padding="@dimen/_padding"
             android:text="Support (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -155,11 +155,11 @@
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_services"
             android:drawablePadding="12dp"
-            android:padding="16dp"
+            android:padding="@dimen/_padding"
             android:text="Services (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_settings_events_btn"
@@ -171,11 +171,11 @@
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_events"
             android:drawablePadding="12dp"
-            android:padding="16dp"
+            android:padding="@dimen/_padding"
             android:text="Events (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -187,41 +187,40 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
-            android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_note_edit"
             android:drawablePadding="12dp"
-            android:padding="16dp"
+            android:padding="@dimen/_padding"
             android:text="Notes"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_settings_tasks_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginBottom="12dp"
             android:layout_weight="1"
             android:background="@drawable/badge_light"
             android:drawableTop="@drawable/vec_task_tree"
             android:drawablePadding="12dp"
-            android:padding="16dp"
-            android:text="Tasks"
+            android:padding="@dimen/_padding"
+            android:text="Tasks (TBA)"
             android:textColor="@color/background"
             android:textFontWeight="200"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_normal" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_settings_logout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_margin_top"
         android:background="@drawable/badge_dark"
         android:text="@string/fragment_settings_logout_btn"
         android:textColor="@color/primary"
         android:textFontWeight="200"
-        android:textSize="16sp" />
+        android:textSize="@dimen/_text_size_normal" />
 </androidx.appcompat.widget.LinearLayoutCompat>

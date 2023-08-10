@@ -17,7 +17,7 @@ import io.acay.fpl.service.sqlite.NotificationStore
 import java.util.Locale
 
 
-class NotificationListFragment(var runAfterSeenAll: (() -> Unit)?) :
+class NotificationListFragment(var runAfterSeen: (() -> Unit)?) :
     BottomSheetDialogFragment(R.layout.notification_fragment_list) {
     private lateinit var list: ArrayList<Notification>
     private lateinit var recyclerView: RecyclerView
@@ -42,7 +42,7 @@ class NotificationListFragment(var runAfterSeenAll: (() -> Unit)?) :
                 list = NotificationStore(requireContext()).getNotifications()
                 recyclerAdapter.notifyItemRangeChanged(0, list.size)
 
-                runAfterSeenAll?.invoke()
+                runAfterSeen?.invoke()
             }
         }
     }
@@ -83,6 +83,8 @@ class NotificationListFragment(var runAfterSeenAll: (() -> Unit)?) :
                 if (notificationStore.setAsSeen(entry.id)) {
                     list[position].seen = true
                     notifyItemChanged(position)
+
+                    runAfterSeen?.invoke()
                 }
             }
 

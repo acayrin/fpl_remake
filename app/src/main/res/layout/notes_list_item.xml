@@ -2,53 +2,54 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginVertical="@dimen/_margin"
     android:background="@drawable/article_background"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="@dimen/_padding">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:clipChildren="false"
-        android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/note_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-36dp"
             android:background="@color/white"
-            android:paddingHorizontal="8dp"
-            android:layout_marginStart="-4dp"
-            android:layout_marginTop="-24dp"
+            android:padding="@dimen/_padding_small"
             android:text="{title}"
-            android:textStyle="bold"
             android:textColor="@color/primary"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_text_size_large"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/note_item_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-36dp"
             android:background="@color/white"
-            android:paddingHorizontal="8dp"
-            android:layout_marginStart="-4dp"
-            android:layout_marginTop="-28dp"
+            android:padding="@dimen/_padding_small"
             android:text="{timestamp}"
             android:textColor="@color/primary"
-            android:textSize="16sp" />
+            android:textSize="@dimen/_text_size_large" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/note_item_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/_margin_top"
         android:text="{content}"
         android:textColor="@color/background"
-        android:textSize="14sp" />
+        android:textSize="@dimen/_text_size_normal" />
 </androidx.appcompat.widget.LinearLayoutCompat>

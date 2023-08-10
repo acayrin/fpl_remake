@@ -5,10 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import io.acay.fpl.model.LNote
-import io.acay.fpl.model.sqlite.Notification
 
-class NoteStore(context: Context) :
-    SQLiteOpenHelper(context, "NoteStore", null, 1) {
+class NoteStore(context: Context) : SQLiteOpenHelper(context, "NoteStore", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.apply {
@@ -30,13 +28,9 @@ class NoteStore(context: Context) :
         return writableDatabase.insert("notes", null, values) != -1L
     }
 
-    fun deleteNote(id: Int): Boolean {
-        return writableDatabase.delete("notes", "id = \"${id}\"", null) > 0
-    }
+    fun deleteNote(id: Int): Boolean = writableDatabase.delete("notes", "id = \"${id}\"", null) > 0
 
-    fun insertNote(value: LNote) {
-        insertNote(value.title, value.content)
-    }
+    fun insertNote(value: LNote): Boolean = insertNote(value.title, value.content)
 
     fun getNotes(): ArrayList<LNote> {
         val out = arrayListOf<LNote>()

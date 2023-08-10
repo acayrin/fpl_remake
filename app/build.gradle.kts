@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation("com.github.j-yun:Vertical-TabLayout:1.0.2")
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.github.lukelorusso:VerticalSeekBar:1.2.7")
     implementation("com.github.vipulasri:timelineview:1.1.5")

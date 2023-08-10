@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.acay.fpl.R
 import io.acay.fpl.fragments.news.ArticleDrawerFragment
 import io.acay.fpl.fragments.news.sub.adapter.GeneralNewsAdapter
+import io.acay.fpl.hooks.ViewAnimation.Instance.customOnCLick
 import io.acay.fpl.model.Article
 import io.acay.fpl.service.LatestNewsService
 import io.noties.markwon.Markwon
@@ -92,7 +93,7 @@ class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
             val author = findViewById<AppCompatTextView>(R.id.fragment_news_latest_author)
             val timestamp = findViewById<AppCompatTextView>(R.id.fragment_news_latest_timestamp)
             val content = findViewById<AppCompatTextView>(R.id.fragment_news_latest_content)
-            val readMore = findViewById<AppCompatButton>(R.id.fragment_news_latest_readmore)
+            val readMore = findViewById<AppCompatButton>(R.id.fragment_news_latest_read_more)
 
             title.apply { text = article.title }
             author.apply { text = article.author }
@@ -108,6 +109,7 @@ class GeneralNewsFragment : Fragment(R.layout.news_fragment_sub_general) {
                 Markwon.create(requireContext()).setMarkdown(content, text)
             }
 
+            readMore.customOnCLick()
             readMore.setOnClickListener {
                 val dialog = ArticleDrawerFragment(article)
                 dialog.show(childFragmentManager, null)

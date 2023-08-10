@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.acay.fpl.R
+import io.acay.fpl.hooks.ViewAnimation.Instance.customOnCLick
 import io.acay.fpl.model.LNote
 import io.acay.fpl.service.sqlite.NoteStore
 import io.noties.markwon.Markwon
@@ -56,7 +57,9 @@ class NotesFragment : BottomSheetDialogFragment(R.layout.notes_list) {
                 inputTitle.doOnTextChanged { text, _, _, _ -> txtTitle = text.toString() }
                 inputContent.doOnTextChanged { text, _, _, _ -> txtContent = text.toString() }
 
+                btnCancel.customOnCLick()
                 btnCancel.setOnClickListener { d.dismiss() }
+                btnCreate.customOnCLick()
                 btnCreate.setOnClickListener {
                     if (txtContent.isNotEmpty() && txtTitle.isNotEmpty() && store.insertNote(
                             txtTitle, txtContent
@@ -100,6 +103,30 @@ class NotesFragment : BottomSheetDialogFragment(R.layout.notes_list) {
                     ?.let {
                         DateUtils.getRelativeTimeSpanString(it.time)
                     }
+            holder.itemView.setOnLongClickListener {
+                val v = LayoutInflater.from(requireContext())
+                    .inflate(R.layout.notes_list_item_delete_confirmation, null)
+                val d = AlertDialog.Builder(requireContext()).setView(v).create()
+
+                val btnDelete = v.findViewById<AppCompatButton>(R.id.note_dialog_btn_delete)
+                val btnCancel = v.findViewById<AppCompatButton>(R.id.note_dialog_btn_cancel)
+
+                btnCancel.setOnClickListener { d.dismiss() }
+                btnDelete.setOnClickListener {
+                    if (store.deleteNote(n.id)) {
+                        d.dismiss()
+
+                        notes = store.getNotes()
+                        notifyItemRemoved(notes.indexOf(n))
+                    } else {
+                        Toast.makeText(context, "Failed to remove note", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                d.show()
+
+                return@setOnLongClickListener it.callOnClick()
+            }
         }
     }
 }
